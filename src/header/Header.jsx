@@ -31,7 +31,6 @@ const Header = () => {
   const organizerNavItems = [
     { id: 1, name: "Dashboard", path: "/dashboard", icon: "📊" },
     { id: 2, name: "Manage Events", path: "/manage-events", icon: "📝" },
-    { id: 4, name: "Analytics", path: "/analytics", icon: "📈" },
     { id: 5, name: "Profile", path: "/organizer-profile", icon: "👤" },
     { id: 6, name: "Logout", onClick: handleLogout, icon: "←" }
   ];

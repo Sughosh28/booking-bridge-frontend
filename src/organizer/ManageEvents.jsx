@@ -10,7 +10,6 @@ const ManageEvents = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
-  
 
   const validateToken = () => {
     const token = localStorage.getItem("authToken");
@@ -80,8 +79,6 @@ const ManageEvents = () => {
     fetchEvents();
   }, [navigate]);
 
-  
-
   const EventCard = ({ event }) => (
     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
       <div className="p-4">
@@ -131,11 +128,17 @@ const ManageEvents = () => {
         </div>
 
         <div className="mt-4 flex justify-between items-center">
-          <button 
+          <button
             onClick={() => navigate(`/edit-event/${event.id}`)}
             className="text-blue-600 hover:text-blue-800 text-sm font-medium"
           >
             Edit Event
+          </button>
+          <button
+            onClick={() => navigate(`/analytics/${event.id}`)}
+            className="text-green-600 hover:text-green-800 text-sm font-medium"
+          >
+            Analytics
           </button>
           <button
             onClick={() => handleDeleteClick(event.id)}
@@ -179,7 +182,9 @@ const ManageEvents = () => {
         onClose={() => setShowModal(false)}
         onConfirm={handleConfirmDelete}
         showSuccess={deleteSuccess}
-        eventName={events.find(event => event.id === selectedEventId)?.event_name}
+        eventName={
+          events.find((event) => event.id === selectedEventId)?.event_name
+        }
       />
     </>
   );
