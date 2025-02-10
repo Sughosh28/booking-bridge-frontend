@@ -97,8 +97,8 @@ const UpcomingEvents = ({ onLengthChange }) => {
             <div className="mt-1.5 pt-1.5 border-t border-gray-100">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-[10px] font-medium text-gray-600">{event.organizer_name}</p>
-                  <p className="text-[10px] text-gray-500">{event.organizer_contact_details}</p>
+                  <p className="text-[10px] font-medium text-gray-600"> By : {event.organizer_name}</p>
+                  <p className="text-[10px] text-gray-500">Ph. {event.organizer_contact_details}</p>
                 </div>
                 <span className="px-1.5 py-0.5 bg-blue-100 text-blue-800 text-[10px] rounded-full">
                   {event.age_restrictions}+
