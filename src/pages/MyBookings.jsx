@@ -2,37 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-const SuccessModal = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="fixed inset-0 bg-black opacity-50"></div>
-      <div className="bg-white rounded-lg p-6 z-50 max-w-sm w-full mx-4 text-center">
-        <svg
-          className="w-16 h-16 text-green-500 mx-auto mb-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M5 13l4 4L19 7"
-          />
-        </svg>
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">Success!</h3>
-        <p className="text-gray-600">Booking deleted successfully</p>
-        <button
-          onClick={onClose}
-          className="mt-6 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors duration-200"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  );
-};
 
 const ConfirmationModal = ({
   isOpen,
@@ -206,19 +175,41 @@ const Bookings = () => {
   };
 
   const handleShare = (booking) => {
+    const shareUrl = `${window.location.origin}/event/${booking.event.id}`; 
     const shareText = `Check out this event: ${booking.event.event_name} at ${
       booking.event.event_location
     } on ${new Date(booking.event.event_date).toLocaleDateString()}`;
+  
     if (navigator.share) {
       navigator.share({
         title: booking.event.event_name,
         text: shareText,
+        url: shareUrl
       });
     } else {
-      navigator.clipboard.writeText(shareText);
-      alert("Booking details copied to clipboard!");
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
+      const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+      const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+      
+      const shareMenu = document.createElement('div');
+      shareMenu.innerHTML = `
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div class="bg-white p-6 rounded-lg shadow-xl">
+            <h3 class="text-lg font-bold mb-4">Share via</h3>
+            <div class="space-y-3">
+              <a href="${whatsappUrl}" target="_blank" class="block px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">WhatsApp</a>
+              <a href="${twitterUrl}" target="_blank" class="block px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-500">Twitter</a>
+              <a href="${facebookUrl}" target="_blank" class="block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Facebook</a>
+              <button onclick="navigator.clipboard.writeText('${shareText} ${shareUrl}'); this.textContent='Copied!'" class="w-full px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Copy Link</button>
+              <button onclick="this.parentElement.parentElement.parentElement.remove()" class="w-full px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Close</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(shareMenu);
     }
   };
+  
 
   const handleMenuClick = (e, bookingId) => {
     e.stopPropagation();
