@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import BookingModal from "./BookingModal";
+import debounce from 'lodash/debounce';
+
 
 const Home = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -18,6 +20,10 @@ const Home = () => {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [ticketCount, setTicketCount] = useState(1);
+  const [debouncedFilters, setDebouncedFilters] = useState({
+    location: '',
+    date: '',
+  });
 
   const categories = [
     "All Events",
@@ -29,6 +35,12 @@ const Home = () => {
     "Sports",
   ];
 
+  const debouncedHandleFilter = useCallback(
+    debounce((type, value) => {
+      handleFilter(type, value);
+    }, 500),
+    []
+  );
   useEffect(() => {
     const fetchEvents = async () => {
       setLoading(true);
@@ -118,14 +130,6 @@ const Home = () => {
         case "date":
           response = await axios.get(
             `http://localhost:8089/getEventsByDate?date=${value}`,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          );
-          break;
-        case "time":
-          response = await axios.get(
-            `http://localhost:8089/getEventsByTime?time=${value}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -283,61 +287,81 @@ const Home = () => {
           </button>
 
           {showFilters && (
-            <div className="mt-4 p-6 bg-white rounded-xl shadow-lg border border-gray-100 backdrop-blur-sm">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700">
-                    Location
-                    <span className="text-teal-500 ml-1">📍</span>
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={selectedLocation}
-                      onChange={(e) => {
-                        setSelectedLocation(e.target.value);
-                        handleFilter("location", e.target.value);
-                      }}
-                      placeholder="Enter location"
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-all duration-300 placeholder-gray-400 text-gray-600"
-                    />
-                  </div>
-                </div>
+  <div className="mt-4 p-8 bg-white/90 backdrop-filter backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-100/50 animate-fadeIn transform hover:scale-[1.01] transition-all duration-300">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="space-y-3 group">
+        <label className="flex items-center text-sm font-semibold text-gray-700 group-hover:text-teal-600 transition-colors duration-300">
+          <span className="mr-2 transform group-hover:scale-110 transition-transform duration-300">📍</span>
+          Location
+        </label>
+        <div className="relative">
+          <input
+            type="text"
+            value={selectedLocation}
+            onChange={(e) => {
+              setSelectedLocation(e.target.value);
+              debouncedHandleFilter("location", e.target.value);
+            }}
+            placeholder="Enter location"
+            className="w-full px-6 py-4 bg-gray-50/70 border-2 border-gray-200 rounded-2xl 
+            focus:ring-4 focus:ring-teal-400/30 focus:border-teal-500 
+            transition-all duration-300 placeholder-gray-400 text-gray-700 
+            hover:bg-white hover:shadow-lg"
+          />
+          <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+        </div>
+      </div>
 
-                <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700">
-                    Date
-                    <span className="text-teal-500 ml-1">📅</span>
-                  </label>
-                  <input
-                    type="date"
-                    value={selectedDate}
-                    onChange={(e) => {
-                      setSelectedDate(e.target.value);
-                      handleFilter("date", e.target.value);
-                    }}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-all duration-300 text-gray-600"
-                  />
-                </div>
+      <div className="space-y-3 group">
+        <label className="flex items-center text-sm font-semibold text-gray-700 group-hover:text-teal-600 transition-colors duration-300">
+          <span className="mr-2 transform group-hover:scale-110 transition-transform duration-300">📅</span>
+          Date
+        </label>
+        <div className="relative">
+          <input
+            type="date"
+            value={selectedDate}
+            onChange={(e) => {
+              setSelectedDate(e.target.value);
+              debouncedHandleFilter("date", e.target.value);
+            }}
+            className="w-full px-6 py-4 bg-gray-50/70 border-2 border-gray-200 rounded-2xl 
+            focus:ring-4 focus:ring-teal-400/30 focus:border-teal-500 
+            transition-all duration-300 text-gray-700 
+            hover:bg-white hover:shadow-lg appearance-none"
+          />
+          <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+        </div>
+      </div>
 
-                <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700">
-                    Time
-                    <span className="text-teal-500 ml-1">⏰</span>
-                  </label>
-                  <input
-                    type="time"
-                    value={selectedTime}
-                    onChange={(e) => {
-                      setSelectedTime(e.target.value);
-                      handleFilter("time", e.target.value);
-                    }}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-all duration-300 text-gray-600"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
+      <div className="flex items-end">
+        <button 
+          onClick={() => {
+            setSelectedLocation('');
+            setSelectedDate('');
+          }}
+          className="w-full px-6 py-4 bg-gradient-to-r from-teal-400 to-cyan-400 
+          text-white font-medium rounded-2xl hover:shadow-lg transform hover:scale-[1.02] 
+          transition-all duration-300 flex items-center justify-center gap-2"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Reset Filters
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
         </div>
 
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -353,18 +377,13 @@ const Home = () => {
                   key={event.id}
                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300"
                 >
-                  <img
-                    src={`https://source.unsplash.com/random/800x600?${event.category}`}
-                    alt={event.event_name}
-                    className="w-full h-40 object-cover"
-                  />
                   <div className="p-4">
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="text-lg font-semibold text-gray-900">
                         {event.event_name}
                       </h3>
                       <span className="text-teal-600 font-medium">
-                        ${event.event_price}
+                        {event.event_price}.00 INR.
                       </span>
                     </div>
                     <p className="text-sm text-teal-600">

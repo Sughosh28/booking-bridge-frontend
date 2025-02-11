@@ -11,6 +11,7 @@ import ManageEvents from './organizer/ManageEvents'
 import CreateEvents from './organizer/CreateEvents'
 import Analytics from './organizer/Analytics'
 import EditEvent from './organizer/EditEvent'
+import { Profile } from './pages/Profile'
 
 function App() {
   const { role } = useSelector((state) => state.auth);
@@ -38,6 +39,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/bookings" element={<MyBookings />} />
               <Route path="/history" element={<BookingHistory />} />
+              <Route path="/profile" element={<Profile />} />
             </>
           )}
 

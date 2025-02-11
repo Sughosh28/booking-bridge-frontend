@@ -22,7 +22,7 @@ const Header = () => {
 
   const userNavItems = [
     { id: 1, name: "Home", path: "/home", icon: "🏠" },
-    { id: 2, name: "Profile", path: "/profile", icon: "👤" },
+    { id: 2, name: "Change e-mail", path: "/profile", icon: "👤" },
     { id: 3, name: "My Bookings", path: "/bookings", icon: "📅" },
     { id: 4, name: "Booking History", path: "/history", icon: "📚" },
     { id: 5, name: "Logout", onClick: handleLogout, icon: "←" }
@@ -31,8 +31,7 @@ const Header = () => {
   const organizerNavItems = [
     { id: 1, name: "Dashboard", path: "/dashboard", icon: "📊" },
     { id: 2, name: "Manage Events", path: "/manage-events", icon: "📝" },
-    { id: 5, name: "Profile", path: "/organizer-profile", icon: "👤" },
-    { id: 6, name: "Logout", onClick: handleLogout, icon: "←" }
+    { id: 3, name: "Logout", onClick: handleLogout, icon: "←" }
   ];
 
   const getNavItems = () => {
