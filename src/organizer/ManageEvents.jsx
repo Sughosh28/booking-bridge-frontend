@@ -10,6 +10,7 @@ const ManageEvents = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [notificationStatus, setNotificationStatus] = useState({});
 
   const validateToken = () => {
     const token = localStorage.getItem("authToken");
@@ -79,6 +80,53 @@ const ManageEvents = () => {
     fetchEvents();
   }, [navigate]);
 
+  const handlePushNotification = async (eventId) => {
+    const token = validateToken();
+    if (!token) return;
+
+    setNotificationStatus((prev) => ({
+      ...prev,
+      [eventId]: "sending",
+    }));
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8089/api/organizer/push-mail-notification?eventId=${eventId}`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 200) {
+        setNotificationStatus((prev) => ({
+          ...prev,
+          [eventId]: "sent",
+        }));
+        setTimeout(() => {
+          setNotificationStatus((prev) => ({
+            ...prev,
+            [eventId]: null,
+          }));
+        }, 3000);
+      }
+    } catch (error) {
+      console.error("Error sending notification:", error);
+      setNotificationStatus((prev) => ({
+        ...prev,
+        [eventId]: "error",
+      }));
+      setTimeout(() => {
+        setNotificationStatus((prev) => ({
+          ...prev,
+          [eventId]: null,
+        }));
+      }, 3000);
+    }
+  };
+
   const EventCard = ({ event }) => (
     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
       <div className="p-4">
@@ -129,16 +177,62 @@ const ManageEvents = () => {
 
         <div className="mt-4 flex justify-between items-center">
           <button
-            onClick={() => navigate(`/edit-event/${event.id}`)}
-            className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+            onClick={() => handlePushNotification(event.id)}
+            disabled={notificationStatus[event.id] === "sending"}
+            className={`flex items-center gap-2 text-sm font-medium transition-colors ${
+              notificationStatus[event.id] === "sending"
+                ? "text-gray-400"
+                : notificationStatus[event.id] === "sent"
+                ? "text-green-600"
+                : notificationStatus[event.id] === "error"
+                ? "text-red-600"
+                : "text-purple-600 hover:text-purple-800"
+            }`}
           >
-            Edit Event
+            <img
+              width="24"
+              height="24"
+              src="https://img.icons8.com/fluency/48/push-notifications.png"
+              alt="push-notifications"
+              className={`${
+                notificationStatus[event.id] === "sending"
+                  ? "animate-pulse"
+                  : ""
+              }`}
+            />
+            <span>
+              {notificationStatus[event.id] === "sending"
+                ? "Sending"
+                : notificationStatus[event.id] === "sent"
+                ? "Sent"
+                : notificationStatus[event.id] === "error"
+                ? "Failed"
+                : "Notify"}
+            </span>
           </button>
+
+          <button
+            onClick={() => navigate(`/edit-event/${event.id}`)}
+            className="flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium"
+          >
+            <img
+              width="24"
+              height="24"
+              src="https://img.icons8.com/windows/50/create-new.png"
+              alt="create-new"
+            />
+          </button>
+
           <button
             onClick={() => navigate(`/analytics/${event.id}`)}
             className="text-green-600 hover:text-green-800 text-sm font-medium"
           >
-            Analytics
+            <img
+              width="24"
+              height="24"
+              src="https://img.icons8.com/windows/50/bar-chart.png"
+              alt="bar-chart"
+            />
           </button>
           <button
             onClick={() => handleDeleteClick(event.id)}
