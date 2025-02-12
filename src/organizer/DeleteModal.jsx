@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 
 const DeleteModal = ({ isOpen, onClose, onConfirm, eventName}) => {
   const [isDeleting, setIsDeleting] = useState(false);
