@@ -1,4 +1,4 @@
-import React, { useState,useCallback, useEffect } from "react";
+import  { useState,useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -16,14 +16,8 @@ const Home = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [ticketCount, setTicketCount] = useState(1);
-  const [debouncedFilters, setDebouncedFilters] = useState({
-    location: '',
-    date: '',
-  });
 
   const categories = [
     "All Events",

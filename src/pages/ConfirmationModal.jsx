@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 
 const ConfirmationModal = ({ isOpen, onClose, onConfirm, title, message }) => {
   const [isLoading, setIsLoading] = useState(false);

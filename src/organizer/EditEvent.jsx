@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -62,13 +62,6 @@ const EditEvent = () => {
     setEvent((prev) => ({
       ...prev,
       [name]: value,
-    }));
-  };
-
-  const handleArtistsChange = (e) => {
-    setEvent((prev) => ({
-      ...prev,
-      artists: [e.target.value],
     }));
   };
 
