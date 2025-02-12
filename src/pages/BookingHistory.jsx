@@ -67,7 +67,7 @@ const BookingHistory = () => {
               </div>
               <div>
                 <p className="text-gray-600">Total Amount</p>
-                <p className="font-medium">${booking.totalAmount.toFixed(2)}</p>
+                <p className="font-medium">{booking.totalAmount.toFixed(2)} INR.</p>
               </div>
               <div>
                 <p className="text-gray-600">Booking Date</p>

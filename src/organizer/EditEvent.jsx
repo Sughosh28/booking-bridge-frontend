@@ -29,6 +29,7 @@ const EditEvent = () => {
       const token = localStorage.getItem("token");
       if (!token) {
         navigate("/login");
+        window.href = "/login";
         return false;
       }
       try {
