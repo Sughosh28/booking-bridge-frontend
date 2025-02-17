@@ -68,7 +68,7 @@ const BookingModal = ({ event, isOpen, onClose, token }) => {
             </div>
             <div className="flex justify-between text-sm mt-2">
               <span className="text-gray-600">Price per ticket:</span>
-              <span className="font-medium">${event.event_price}</span>
+              <span className="font-medium">{event.event_price} INR</span>
             </div>
           </div>
 
@@ -100,7 +100,7 @@ const BookingModal = ({ event, isOpen, onClose, token }) => {
           <div className="border-t pt-4">
             <div className="flex justify-between text-lg font-semibold">
               <span>Total Price:</span>
-              <span>${(event.event_price * ticketCount).toFixed(2)}</span>
+              <span>{(event.event_price * ticketCount).toFixed(2)} INR</span>
             </div>
           </div>
 

@@ -377,7 +377,7 @@ const Home = () => {
                         {event.event_name}
                       </h3>
                       <span className="text-teal-600 font-medium">
-                        {event.event_price}.00 INR.
+                        {event.event_price} INR
                       </span>
                     </div>
                     <p className="text-sm text-teal-600">
