@@ -156,7 +156,7 @@ const ManageEvents = () => {
             <span>⏰</span>
             <span className="ml-2">{event.event_time}</span>
           </div>
-            <span className="ml-2">{event.age_restrictions}</span>
+            <span className="ml-2">{event.age_restrictions}+</span>
           <div className="flex items-center text-gray-600">
             <span>📍</span>
             <span className="ml-2">{event.event_location}</span>
