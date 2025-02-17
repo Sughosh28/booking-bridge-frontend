@@ -53,7 +53,7 @@ const Header = () => {
                          hover:scale-105 hover:text-transparent hover:bg-clip-text
                          hover:bg-gradient-to-r hover:from-white hover:to-teal-200
                          group-hover:animate-pulse">
-              {role === 'ROLE_ORGANIZER' ? 'EventHub Organizer' : 'EventHub'}
+              {role === 'ROLE_ORGANIZER' ? 'BookingBridge Organizer' : 'BookingBridge'}
             </h1>
           </div>
 
