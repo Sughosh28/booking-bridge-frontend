@@ -1,8 +1,25 @@
-# React + Vite
+# Event Booking Backend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the backend for the Event Booking project, which can be run using Docker. It interacts with a database (which you can configure to use either a local or cloud-based solution such as AWS RDS).
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Before running the Docker container, ensure you have the following:
+
+- **Docker** installed on your system. [Install Docker](https://www.docker.com/get-started)
+
+
+## Running the Project
+
+Follow these steps to run the backend in Docker:
+
+### 1. Build the Docker image
+If you haven't already built the Docker image, you can do so with the following command:
+
+
+docker build -t event-booking .
+
+docker run -p 8089:8089 event-booking
+
+
+And then access the frontend vercel link which you can see in the description.
