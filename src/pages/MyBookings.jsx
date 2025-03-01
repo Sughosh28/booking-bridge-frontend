@@ -1,6 +1,7 @@
 import  { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 const ConfirmationModal = ({
@@ -73,6 +74,7 @@ const Bookings = () => {
   const [bookingToDelete, setBookingToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const navigate=useNavigate();
 
   useEffect(() => {
     if (showSuccessModal) {
@@ -354,10 +356,35 @@ const Bookings = () => {
       </div>
 
       {bookings.length === 0 && (
-        <div className="text-center py-10">
-          <p className="text-xl text-gray-600">No bookings found</p>
-        </div>
-      )}
+  <div className="text-center py-10">
+    <div className="flex flex-col items-center justify-center">
+      <svg
+        className="w-12 h-12 text-gray-400 mb-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+      <p className="text-xl text-gray-600">No bookings found</p>
+      <p className="text-gray-500 mt-2">
+        Looks like you haven't booked any events yet.
+      </p>
+      <button
+      onClick={()=>navigate("/")}
+        className="mt-4 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors duration-200"
+      >
+        Explore Events
+      </button>
+    </div>
+  </div>
+)}
       <SuccessModal
         isOpen={showSuccessModal}
         onClose={() => setShowSuccessModal(false)}
