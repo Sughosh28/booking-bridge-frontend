@@ -127,7 +127,7 @@ const Header = () => {
 
             <div className="p-6 border-t border-white/20">
               <p className="text-white/70 text-sm text-center">
-                © 2024 EventHub. All rights reserved.
+                © {new Date().getFullYear()} BookingBridge. All rights reserved.
               </p>
             </div>
           </div>

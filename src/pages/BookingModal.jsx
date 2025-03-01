@@ -1,39 +1,40 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
 
 const BookingModal = ({ event, isOpen, onClose, token }) => {
   const [ticketCount, setTicketCount] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [confirmed, setConfirmed] = useState(false);
 
   const handleBooking = async () => {
     setLoading(true);
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     try {
       const response = await axios.post(
         `http://localhost:8089/api/bookEvents/bookTickets/${event.id}`,
         {
-          no_of_tickets: ticketCount
+          no_of_tickets: ticketCount,
         },
         {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
-      if(response.status === 201) {
-        setSuccess('Booking successful! Check your email for confirmation.');
+      if (response.status === 201) {
+        setConfirmed(true);
+        setSuccess("Booking successful! Check your email for confirmation.");
         setTimeout(() => {
           onClose();
-          setSuccess('');
+          setSuccess("");
         }, 3000);
       }
-      
     } catch (error) {
-      setError(error.response?.data || 'Failed to book tickets');
+      setError(error.response?.data || "Failed to book tickets");
     } finally {
       setLoading(false);
     }
@@ -45,13 +46,25 @@ const BookingModal = ({ event, isOpen, onClose, token }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
       <div className="bg-white rounded-xl p-6 w-full max-w-md m-4">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-gray-800">{event.event_name}</h2>
+          <h2 className="text-2xl font-bold text-gray-800">
+            {event.event_name}
+          </h2>
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
@@ -81,17 +94,41 @@ const BookingModal = ({ event, isOpen, onClose, token }) => {
                 onClick={() => setTicketCount(Math.max(1, ticketCount - 1))}
                 className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M20 12H4"
+                  />
                 </svg>
               </button>
-              <span className="text-xl font-semibold w-12 text-center">{ticketCount}</span>
+              <span className="text-xl font-semibold w-12 text-center">
+                {ticketCount}
+              </span>
               <button
-                onClick={() => setTicketCount(Math.min(event.capacity, ticketCount + 1))}
+                onClick={() =>
+                  setTicketCount(Math.min(event.capacity, ticketCount + 1))
+                }
                 className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 4v16m8-8H4"
+                  />
                 </svg>
               </button>
             </div>
@@ -118,7 +155,7 @@ const BookingModal = ({ event, isOpen, onClose, token }) => {
 
           <button
             onClick={handleBooking}
-            disabled={loading}
+            disabled={loading || confirmed}
             className="w-full py-3 bg-gradient-to-r from-teal-400 to-cyan-400 text-white rounded-lg hover:opacity-90 transition duration-300 disabled:opacity-50"
           >
             {loading ? (
@@ -126,8 +163,10 @@ const BookingModal = ({ event, isOpen, onClose, token }) => {
                 <div className="w-5 h-5 border-t-2 border-b-2 border-white rounded-full animate-spin mr-2"></div>
                 Processing...
               </div>
+            ) : confirmed ? (
+              "Booking Confirmed"
             ) : (
-              'Confirm Booking'
+              "Confirm Booking"
             )}
           </button>
         </div>

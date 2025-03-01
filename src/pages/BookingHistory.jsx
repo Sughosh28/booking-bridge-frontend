@@ -30,7 +30,11 @@ const BookingHistory = () => {
   }, [token]);
 
   if (loading) {
-    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-teal-500"></div>
+      </div>
+    );
   }
 
   return (
@@ -88,10 +92,35 @@ const BookingHistory = () => {
         ))}
         
         {bookings.length === 0 && (
-          <div className="text-center py-8">
-            <p className="text-gray-600">No booking history found.</p>
-          </div>
-        )}
+  <div className="text-center py-10">
+    <div className="flex flex-col items-center justify-center">
+      <svg
+        className="w-12 h-12 text-gray-400 mb-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+      <p className="text-xl text-gray-600">No booking history!</p>
+      <p className="text-gray-500 mt-2">
+        Looks like you haven't booked any events yet.
+      </p>
+      <a
+        href="/"
+        className="mt-4 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors duration-200"
+      >
+        Explore Events
+      </a>
+    </div>
+  </div>
+)}
       </div>
     </div>
   );

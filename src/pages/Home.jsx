@@ -403,7 +403,7 @@ const Home = () => {
                           }`}
                         >
                           {event.age_restrictions >= 18
-                            ? "18+"
+                            ? "18"
                             : event.age_restrictions}
                           +
                         </p>
