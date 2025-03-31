@@ -42,7 +42,7 @@ const CreateEvents = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:8089/api/organizer/createEvent",
+        "https://api.srss.live/api/organizer/createEvent",
         eventData,
         {
           headers: {

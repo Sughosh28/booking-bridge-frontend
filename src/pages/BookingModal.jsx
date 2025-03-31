@@ -15,7 +15,7 @@ const BookingModal = ({ event, isOpen, onClose, token }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8089/api/bookEvents/bookTickets/${event.id}`,
+        `https://api.srss.live/api/bookEvents/bookTickets/${event.id}`,
         {
           no_of_tickets: ticketCount,
         },

@@ -10,7 +10,7 @@ const BookingHistory = () => {
   useEffect(() => {
     const fetchBookingHistory = async () => {
       try {
-        const response = await axios.get('http://localhost:8089/api/bookEvents/users/bookings', {
+        const response = await axios.get('https://api.srss.live/api/bookEvents/users/bookings', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

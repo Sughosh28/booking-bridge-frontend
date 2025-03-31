@@ -23,7 +23,7 @@ const Analytics = () => {
       try {
         const token = localStorage.getItem('authToken');
         const response = await axios.get(
-          `http://localhost:8089/api/organizer/${eventId}/totalTickets`,
+          `https://api.srss.live/api/organizer/${eventId}/totalTickets`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

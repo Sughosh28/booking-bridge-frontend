@@ -29,7 +29,7 @@ const OrganizerDashboard = () => {
 
         // Fetch total events
         const totalEventsResponse = await axios.get(
-          "http://localhost:8089/api/organizer/totalEvents",
+          "https://api.srss.live/api/organizer/totalEvents",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -41,7 +41,7 @@ const OrganizerDashboard = () => {
 
         // Fetch total tickets
         const totalTicketsResponse = await axios.get(
-          "http://localhost:8089/api/organizer/total-ticket-bookings",
+          "https://api.srss.live/api/organizer/total-ticket-bookings",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -53,7 +53,7 @@ const OrganizerDashboard = () => {
 
         // Fetch recent events
         const recentEventsResponse = await axios.get(
-          "http://localhost:8089/api/organizer/recent-events",
+          "https://api.srss.live/api/organizer/recent-events",
           {
             headers: {
               Authorization: `Bearer ${token}`,

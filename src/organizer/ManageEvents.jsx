@@ -32,7 +32,7 @@ const ManageEvents = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:8089/api/organizer/deleteEvent/${selectedEventId}`,
+        `https://api.srss.live/api/organizer/deleteEvent/${selectedEventId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ const ManageEvents = () => {
 
       try {
         const response = await axios.get(
-          "http://localhost:8089/api/organizer/get-all-events",
+          "https://api.srss.live/api/organizer/get-all-events",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -91,7 +91,7 @@ const ManageEvents = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8089/api/organizer/push-mail-notification?eventId=${eventId}`,
+        `https://api.srss.live/api/organizer/push-mail-notification?eventId=${eventId}`,
         null,
         {
           headers: {

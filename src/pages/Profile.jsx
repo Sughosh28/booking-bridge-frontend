@@ -20,7 +20,7 @@ export const Profile = () => {
     e.preventDefault()
     setIsLoading(true)
     try {
-      const response = await axios.post('http://localhost:8089/api/users/send-otp-to-new-mail', 
+      const response = await axios.post('https://api.srss.live/api/users/send-otp-to-new-mail', 
         { email: newEmail },
         { 
           headers: { 
@@ -46,7 +46,7 @@ export const Profile = () => {
     e.preventDefault()
     setIsLoading(true)
     try {
-      const response = await axios.put('http://localhost:8089/api/users/updateEmail',
+      const response = await axios.put('https://api.srss.live/api/users/updateEmail',
         { otp: otp },
         {
           headers: {

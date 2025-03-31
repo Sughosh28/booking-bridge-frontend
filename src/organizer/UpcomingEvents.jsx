@@ -24,7 +24,7 @@ const UpcomingEvents = ({ onLengthChange }) => {
   
         try {
           const upcomingEventsResponse = await axios.get(
-            "http://localhost:8089/api/organizer/upcoming-events",
+            "https://api.srss.live/api/organizer/upcoming-events",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
