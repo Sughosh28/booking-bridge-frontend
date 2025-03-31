@@ -39,7 +39,7 @@ const Home = () => {
     const fetchEvents = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("http://localhost:8089/getEvents", {
+        const response = await axios.get("https://api.srss.live/getEvents", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -62,7 +62,7 @@ const Home = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:8089/search?keyword=${searchQuery}`,
+        `https://api.srss.live/search?keyword=${searchQuery}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -83,7 +83,7 @@ const Home = () => {
     setLoading(true);
     try {
       if (category === "All Events") {
-        const response = await axios.get("http://localhost:8089/getEvents", {
+        const response = await axios.get("https://api.srss.live/getEvents", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -91,7 +91,7 @@ const Home = () => {
         setEvents(Array.isArray(response.data) ? response.data : []);
       } else {
         const response = await axios.get(
-          `http://localhost:8089/getEventsByCategory?category=${category}`,
+          `https://api.srss.live/getEventsByCategory?category=${category}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -115,7 +115,7 @@ const Home = () => {
       switch (filterType) {
         case "location":
           response = await axios.get(
-            `http://localhost:8089/getEventsByLocation?location=${value}`,
+            `https://api.srss.live/getEventsByLocation?location=${value}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -123,7 +123,7 @@ const Home = () => {
           break;
         case "date":
           response = await axios.get(
-            `http://localhost:8089/getEventsByDate?date=${value}`,
+            `https://api.srss.live/getEventsByDate?date=${value}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }

@@ -28,7 +28,7 @@ const Registration = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8089/register', formData);
+      const response = await axios.post('https://api.srss.live/register', formData);
       setMessage(response.data);
       setFormData({
         username: '',

@@ -121,7 +121,7 @@ const Bookings = () => {
     const fetchBookings = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8089/api/bookEvents/bookings",
+          "https://api.srss.live/api/bookEvents/bookings",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -149,7 +149,7 @@ const Bookings = () => {
     setIsDeleting(true);
     try {
       await axios.delete(
-        `http://localhost:8089/api/bookEvents/bookings/${bookingToDelete}/cancel`,
+        `https://api.srss.live/api/bookEvents/bookings/${bookingToDelete}/cancel`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

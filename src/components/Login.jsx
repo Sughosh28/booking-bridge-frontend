@@ -18,7 +18,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:8089/loginUser", {
+      const response = await axios.post("https://api.srss.live/loginUser", {
         username,
         password,
       });

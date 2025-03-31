@@ -34,7 +34,7 @@ const EditEvent = () => {
       }
       try {
         const response = await axios.get(
-          `http://localhost:8089/api/organizer/events/${id}`,
+          `https://api.srss.live/api/organizer/events/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -80,7 +80,7 @@ const EditEvent = () => {
       .filter((artist) => artist !== "");
     try {
       const response = await axios.put(
-        `http://localhost:8089/api/organizer/updateEvents/${id}`,
+        `https://api.srss.live/api/organizer/updateEvents/${id}`,
         {
           ...event,
           artists: artistsArray,
