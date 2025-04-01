@@ -39,13 +39,15 @@ const Header = () => {
     return role === 'ROLE_ORGANIZER' ? organizerNavItems : userNavItems;
   };
 
-  const headerBgClass = role === 'ROLE_ORGANIZER' 
-    ? 'bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500'
-    : 'bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-400';
+  // Conditionally set the header background based on the user's role
+  const headerBgClass = role === 'ROLE_ORGANIZER'
+    ? 'bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500' // Blue gradient for organizers
+    : 'bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-400'; // Teal gradient for other users
 
   return (
     <nav className={`sticky top-0 z-50 ${headerBgClass} shadow-lg`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Adjusted max-w-full and added padding */}
+      <div className="max-w-full mx-auto px-2 sm:px-4 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0 group">
             <h1 className="text-3xl font-extrabold text-white tracking-wider cursor-pointer
@@ -53,7 +55,7 @@ const Header = () => {
                          hover:scale-105 hover:text-transparent hover:bg-clip-text
                          hover:bg-gradient-to-r hover:from-white hover:to-teal-200
                          group-hover:animate-pulse">
-              {role === 'ROLE_ORGANIZER' ? 'BookingBridge Organizer' : 'BookingBridge'}
+              BookingBridge
             </h1>
           </div>
 
@@ -78,7 +80,7 @@ const Header = () => {
         )}
 
         <div
-          className={`fixed top-0 right-0 h-screen w-80 ${headerBgClass}
+          className={`fixed top-0 right-0 h-screen w-80 max-w-md ${headerBgClass}
                     transform transition-transform duration-500 ease-in-out z-50
                     shadow-[-10px_0_20px_rgba(0,0,0,0.2)]
                     ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
