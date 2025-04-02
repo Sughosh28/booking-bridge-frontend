@@ -42,7 +42,17 @@ const Registration = () => {
         navigate('/login');
       }
     } catch (error) {
-      setMessage(error.response.data);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        setMessage(error.response.data.message || 'Registration failed. Please try again.');
+      } else if (error.request) {
+        // The request was made but no response was received
+        setMessage('No response from server. Please check your connection and try again.');
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        setMessage('An error occurred. Please try again later.');
+      }
     }
     finally{
       setLoading(false);
