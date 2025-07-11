@@ -11,6 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [showDemoBadge, setShowDemoBadge] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -36,6 +37,12 @@ const Login = () => {
         );
         setMessage(message);
 
+        if (username === "demo_user") {
+          setShowDemoBadge(true);
+        } else {
+          setShowDemoBadge(false);
+        }
+
         if (role === "ROLE_ORGANIZER") {
           navigate("/dashboard");
         } else {
@@ -50,8 +57,19 @@ const Login = () => {
     }
   };
 
+  const handleAutofillDemo = () => {
+    setUsername("demo_user");
+    setPassword("demo_user");
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 relative">
+      {/* Demo Mode Badge */}
+      {showDemoBadge && (
+        <span className="absolute top-6 right-6 bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-semibold shadow">
+          Demo Mode
+        </span>
+      )}
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -168,17 +186,22 @@ const Login = () => {
             </h3>
             <div className="w-full text-left space-y-1 mb-2">
               <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
-                <span className="font-medium text-gray-700">Username:</span>
-                <span className="text-orange-700 font-mono break-all">demo_user</span>
-              </div>
-              <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
-                <span className="font-medium text-gray-700">Password:</span>
-                <span className="text-orange-700 font-mono break-all">demo_user</span>
+                <span className="font-medium text-gray-700">📧 Username & Password:</span>
+                <span className="text-orange-700 font-mono break-all">
+                  demo_user
+                </span>
               </div>
             </div>
-            <p className="text-xs text-red-500 text-center">
+            <p className="text-xs text-red-500 text-center mb-2">
               Use these credentials to explore the app. No sign-up required.
             </p>
+            <button
+              type="button"
+              onClick={handleAutofillDemo}
+              className="text-xs text-blue-600 underline hover:text-blue-800 cursor-pointer transition mt-2"
+            >
+              📥 Autofill Demo Credentials
+            </button>
           </div>
         </div>
       </div>
