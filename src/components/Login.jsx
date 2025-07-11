@@ -161,6 +161,25 @@ const Login = () => {
               </Link>
             </p>
           </div>
+
+          <div className="mt-8 bg-yellow-50 border-2 border-dashed border-orange-400 rounded-xl p-4 shadow-md flex flex-col items-center">
+            <h3 className="text-lg font-bold text-orange-600 mb-2 flex items-center">
+              <span className="mr-2">🔓</span> Demo Account Available
+            </h3>
+            <div className="w-full text-left space-y-1 mb-2">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
+                <span className="font-medium text-gray-700">Username:</span>
+                <span className="text-orange-700 font-mono break-all">demo_user</span>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
+                <span className="font-medium text-gray-700">Password:</span>
+                <span className="text-orange-700 font-mono break-all">demo_user</span>
+              </div>
+            </div>
+            <p className="text-xs text-red-500 text-center">
+              Use these credentials to explore the app. No sign-up required.
+            </p>
+          </div>
         </div>
       </div>
     </div>
