@@ -12,6 +12,8 @@ import CreateEvents from './organizer/CreateEvents'
 import Analytics from './organizer/Analytics'
 import EditEvent from './organizer/EditEvent'
 import { Profile } from './pages/Profile'
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
+
 
 function App() {
   const { role } = useSelector((state) => state.auth);
@@ -47,6 +49,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
+      <VercelAnalytics />
     </>
   )
 }
