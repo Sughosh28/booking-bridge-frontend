@@ -64,7 +64,6 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 relative">
-      {/* Demo Mode Badge */}
       {showDemoBadge && (
         <span className="absolute top-6 right-6 bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-semibold shadow">
           Demo Mode
